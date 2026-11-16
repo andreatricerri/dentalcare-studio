@@ -35,7 +35,7 @@ dentalcare-studio/
 2. Trova l'indirizzo IP del computer (es. `192.168.1.20`).
 3. Dal telefono apri `http://192.168.1.20:8000`.
 
-**Online (consigliato per il portfolio):** carica la cartella su GitHub Pages, Netlify o Vercel come sito statico. Non serve alcuna configurazione di build: la cartella principale è quella da pubblicare.
+**Online:** il sito è pubblicato su Netlify all'indirizzo https://dentalcare-studio.netlify.app ed è collegato a questo repository: ogni push sul branch `main` lo aggiorna automaticamente. Se cambi indirizzo, aggiorna l'URL dell'anteprima social (`og:image`) nelle pagine.
 
 Il layout è stato controllato a 375, 768, 1024 e 1440 px. Tutte le pagine hanno il meta viewport per i dispositivi mobili.
 
