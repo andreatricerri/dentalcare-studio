@@ -1,9 +1,25 @@
+# DentalCare Studio — configurazione Netlify
 # Sito statico: nessun comando di build, si pubblica la cartella principale.
 [build]
   publish = "."
+  command = ""
 
+# Sicurezza di base e privacy (nessun dato inviato a terzi tramite referrer completo)
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+
+# Le pagine HTML vengono sempre ricontrollate: ogni aggiornamento è subito visibile
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"

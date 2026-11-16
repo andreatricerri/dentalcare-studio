@@ -23,7 +23,9 @@
     });
   };
   DC.normalize = function (text) {
-    return String(text || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+    var s = String(text || "").toLowerCase();
+    if (s.normalize) s = s.normalize("NFD").replace(/[̀-ͯ]/g, ""); // rimuove gli accenti
+    return s.trim();
   };
   DC.icon = function (name, cls) {
     return '<svg class="' + (cls || "icon") + '" aria-hidden="true" focusable="false"><use href="#i-' + name + '"></use></svg>';
@@ -155,8 +157,11 @@
       '<div class="modal__body">' + (opts.html || "") + "</div>";
     document.body.appendChild(dialog);
 
+    var backdrop = null;
     function cleanup() {
       document.body.classList.remove("modal-open");
+      root.classList.remove("modal-open");
+      if (backdrop && backdrop.parentNode) backdrop.parentNode.removeChild(backdrop);
       if (dialog.parentNode) dialog.parentNode.removeChild(dialog);
       if (opts.onClose) opts.onClose();
       if (opener && typeof opener.focus === "function" && document.contains(opener)) opener.focus();
@@ -171,10 +176,28 @@
     if (typeof dialog.showModal === "function") {
       dialog.showModal();
     } else {
+      /* Browser senza <dialog> nativo: sfondo, centratura, Escape e focus
+         mantenuto dentro la modale gestiti qui. */
+      dialog.classList.add("modal--fallback");
       dialog.setAttribute("open", "");
-      dialog.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+      dialog.setAttribute("role", "dialog");
+      dialog.setAttribute("aria-modal", "true");
+      backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop-fallback";
+      backdrop.addEventListener("click", close);
+      document.body.insertBefore(backdrop, dialog);
+      dialog.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); close(); return; }
+        if (e.key !== "Tab") return;
+        var f = DC.qsa('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])', dialog);
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
     }
     document.body.classList.add("modal-open");
+    root.classList.add("modal-open");
     var focusTarget = DC.qs("[autofocus]", dialog) || DC.qs(".modal__close", dialog);
     if (focusTarget) focusTarget.focus();
     if (opts.onOpen) opts.onOpen(dialog, close);
@@ -271,6 +294,31 @@
     DC.observeReveal();
   }
 
+  /* ------------------------------------------- compatibilità dispositivi */
+  /* Stato visivo di radio e checkbox anche dove CSS :has() non esiste
+     (Safari < 15.4, Firefox < 121). */
+  function syncChecked() {
+    DC.qsa(".choice, .segmented label").forEach(function (label) {
+      var input = DC.qs("input", label);
+      label.classList.toggle("is-checked", !!(input && input.checked));
+    });
+  }
+  DC.syncChecked = syncChecked;
+  function initCompat() {
+    syncChecked();
+    document.addEventListener("change", syncChecked);
+    document.addEventListener("reset", function () { setTimeout(syncChecked, 0); });
+    /* Ritorno con "indietro" su Safari/iOS (pagina ripristinata dalla cache):
+       chiude il menu mobile rimasto aperto. */
+    window.addEventListener("pageshow", function (e) {
+      if (!e.persisted) return;
+      var t = DC.qs(".nav-toggle"), n = DC.qs("#main-nav");
+      if (t && n) { t.setAttribute("aria-expanded", "false"); n.classList.remove("is-open"); }
+    });
+    /* Classe per dispositivi touch (utile per eventuali regole future) */
+    if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) root.classList.add("is-touch");
+  }
+
   /* ----------------------------------------------------------------- init */
   DC.ready = function (fn) {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -283,6 +331,7 @@
     initDemoLinks();
     initAccordion();
     renderSteps();
+    initCompat();
     initReveal();
   });
 })();

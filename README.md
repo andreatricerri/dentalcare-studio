@@ -20,7 +20,7 @@ dentalcare-studio/
 ├── faq.html              FAQ con ricerca, categorie e accordion
 ├── contatti.html         Recapiti demo, mappa illustrativa, modulo
 ├── privacy.html          Privacy e trasparenza della demo
-├── css/  base.css · components.css · pages.css
+├── css/  base.css · components.css · pages.css · compat.css (compatibilità dispositivi)
 ├── js/   data.js · main.js · services.js · team.js · faq.js · gallery.js · forms.js
 └── assets/images/        Illustrazioni SVG locali (segnaposto)
 ```
@@ -38,6 +38,16 @@ dentalcare-studio/
 **Online (consigliato per il portfolio):** carica la cartella su GitHub Pages, Netlify o Vercel come sito statico. Non serve alcuna configurazione di build: la cartella principale è quella da pubblicare.
 
 Il layout è stato controllato a 375, 768, 1024 e 1440 px. Tutte le pagine hanno il meta viewport per i dispositivi mobili.
+
+## Compatibilità con i dispositivi
+
+Il sito è pensato per iPhone, iPad, Android, Mac e Windows (Safari, Chrome, Edge, Firefox recenti):
+
+- `css/compat.css` raccoglie le regole specifiche: aree sicure per iPhone con notch (`viewport-fit=cover` + `env(safe-area-inset-*)`), altezza corretta dello schermo su mobile (`dvh` con alternativa `vh`), campi dei form a 16px (niente zoom automatico su iPhone), aspetto uniforme dei controlli, hover disattivato sui touch screen, schermi da 320px, telefono in orizzontale, modalità a contrasto elevato di Windows, stampa, alternative per browser senza `aspect-ratio`.
+- `js/main.js` (sezione "compatibilità dispositivi") aggiunge alternative per browser senza `<dialog>` o senza `:has()` e gestisce il tasto "indietro" di Safari.
+- Icone: `favicon.svg`, PNG 32px per Windows, `apple-touch-icon.png` per la schermata Home di iPhone/iPad e `site.webmanifest` per Android.
+- Anteprima del link condiviso (WhatsApp, LinkedIn, Telegram…): tag Open Graph con `assets/images/anteprima-social.png`.
+- `404.html` per gli indirizzi inesistenti e `netlify.toml` con intestazioni di sicurezza e cache.
 
 ## Modificare colori e font
 

@@ -115,6 +115,7 @@
     }
     form.addEventListener("change", function (e) { if (e.target.name === "tipo") syncMode(); });
     syncMode();
+    if (DC.syncChecked) DC.syncChecked();
 
     /* Contatore caratteri */
     var textarea = DC.qs("textarea", form);
