@@ -1,0 +1,113 @@
+/* ==========================================================================
+   DentalCare Studio — pages.css
+   Stili specifici delle singole pagine.
+   ========================================================================== */
+
+/* ---------- HOME: hero ---------- */
+.hero { background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); padding-block: clamp(2.5rem, 6vw, 5rem); }
+.hero__grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+@media (min-width: 960px) { .hero__grid { grid-template-columns: 1.02fr .98fr; } }
+.hero h1 { max-width: 15ch; }
+.hero .lead { margin-top: 1.25rem; max-width: 52ch; }
+.hero__actions { margin-top: 2rem; }
+.hero__points { display: grid; gap: .9rem; margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid var(--border-subtle); }
+@media (min-width: 560px) { .hero__points { grid-template-columns: repeat(3, 1fr); } }
+.hero__point { display: flex; gap: .65rem; align-items: flex-start; font-weight: 500; font-size: .95rem; line-height: 1.4; }
+.hero__point .icon { color: var(--brand-primary); width: 22px; height: 22px; margin-top: 1px; }
+.hero__visual { position: relative; }
+.hero__visual .media { box-shadow: var(--shadow); }
+.hero__note {
+  position: absolute; left: clamp(-.5rem, -1.5vw, -1.5rem); bottom: 1.5rem;
+  display: flex; gap: .75rem; align-items: center;
+  max-width: 290px; padding: .9rem 1.1rem;
+  background: #fff; border: 1px solid var(--border-subtle); border-radius: var(--radius);
+  box-shadow: var(--shadow); font-size: .9rem; line-height: 1.4;
+}
+.hero__note strong { display: block; font-size: .95rem; }
+@media (max-width: 959px) { .hero__note { left: 1rem; bottom: 1rem; } }
+@media (max-width: 420px) { .hero__note { position: static; margin-top: .75rem; max-width: none; } }
+
+/* ---------- HOME: presentazione ---------- */
+.intro-media { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1rem; align-items: end; }
+.intro-media .media:last-child { margin-bottom: 2.5rem; }
+.values-list { display: grid; gap: 1.1rem; margin-top: 1.75rem; }
+
+/* ---------- HOME: sezione ansia ---------- */
+.calm-panel { display: grid; gap: clamp(1.5rem, 4vw, 3rem); padding: clamp(1.5rem, 5vw, 3.25rem); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+@media (min-width: 900px) { .calm-panel { grid-template-columns: .9fr 1.1fr; align-items: center; } }
+.calm-list { display: grid; gap: .85rem; }
+.calm-list li { display: flex; gap: .8rem; align-items: flex-start; padding: 1rem 1.1rem; background: var(--bg-page); border: 1px solid var(--border-subtle); border-radius: var(--radius); }
+.calm-list .icon { color: var(--brand-primary); margin-top: 2px; }
+
+/* ---------- HOME: contatti anteprima ---------- */
+.contact-preview { display: grid; gap: 1.25rem; }
+@media (min-width: 900px) { .contact-preview { grid-template-columns: repeat(3, 1fr); } }
+.contact-preview .card { padding: 1.5rem; gap: .75rem; }
+.contact-line { display: flex; gap: .75rem; align-items: flex-start; }
+.contact-line .icon { color: var(--brand-primary); margin-top: 2px; }
+
+/* ---------- LO STUDIO ---------- */
+.principles { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.principle { padding: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+.principle .icon-badge { margin-bottom: 1rem; }
+.principle h3 { margin-bottom: .4rem; }
+.principle p { color: var(--text-secondary); }
+.room-row + .room-row { margin-top: clamp(2.5rem, 6vw, 4rem); }
+@media (min-width: 900px) { .room-row:nth-child(even) .room-row__media { order: 2; } }
+
+/* ---------- SERVIZI ---------- */
+.services-layout { display: grid; gap: 1.5rem; }
+.service-category-badge { margin-bottom: .1rem; }
+
+/* ---------- DETTAGLIO SERVIZIO ---------- */
+.service-hero { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+@media (min-width: 900px) { .service-hero { grid-template-columns: 1.1fr .9fr; } }
+.service-layout { display: grid; gap: clamp(2rem, 4vw, 3rem); align-items: start; }
+@media (min-width: 960px) { .service-layout { grid-template-columns: minmax(0, 1fr) 340px; } .service-aside { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+.service-block + .service-block { margin-top: 2.25rem; }
+.service-block h2 { font-size: 1.4rem; margin-bottom: .9rem; }
+.check-list { display: grid; gap: .65rem; list-style: none; padding: 0; margin: 0; }
+.check-list li { display: flex; gap: .7rem; align-items: flex-start; }
+.check-list li::before { content: ""; flex: none; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23245C7C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12 4 4 8-8'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.num-list { display: grid; gap: .75rem; list-style: none; padding: 0; margin: 0; counter-reset: n; }
+.num-list li { display: flex; gap: .8rem; align-items: flex-start; counter-increment: n; }
+.num-list li::before { content: counter(n); flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--brand-primary); color: #fff; font-weight: 700; font-size: .85rem; margin-top: 1px; }
+.aside-stack { display: grid; gap: 1rem; }
+.pro-mini { display: flex; gap: 1rem; align-items: center; }
+.pro-mini img { width: 72px; height: 72px; border-radius: 50%; border: 1px solid var(--border-subtle); object-fit: cover; flex: none; }
+.not-found { max-width: 640px; }
+
+/* ---------- TEAM ---------- */
+.team-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.team-meta { font-size: .9rem; color: var(--text-secondary); }
+.team-meta strong { color: var(--text-primary); font-weight: 600; }
+
+/* ---------- PRIMA VISITA ---------- */
+.tips-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.tips-grid .card { padding: 1.5rem; gap: .9rem; }
+.tips-grid ul { padding-left: 1.15rem; margin: 0; color: var(--text-secondary); }
+.tips-grid li + li { margin-top: .35rem; }
+
+/* ---------- PREVENTIVO / FORM ---------- */
+.form-layout { display: grid; gap: clamp(1.5rem, 4vw, 2.5rem); align-items: start; }
+@media (min-width: 980px) { .form-layout { grid-template-columns: minmax(0, 1fr) 340px; } .form-aside { position: sticky; top: calc(var(--header-h) + 1.5rem); } }
+.form-success { text-align: left; }
+.form-success .icon-badge { background: var(--success-bg); color: var(--success-text); margin-bottom: 1rem; }
+
+/* ---------- CONTATTI ---------- */
+.contact-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 960px) { .contact-grid { grid-template-columns: .95fr 1.05fr; } }
+.contact-card { padding: clamp(1.4rem, 4vw, 2rem); gap: 1.25rem; }
+.contact-list { display: grid; gap: 1.1rem; }
+.map-figure { position: relative; }
+.map-figure figcaption { margin-top: .75rem; font-size: .9rem; color: var(--text-secondary); }
+.directions { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+
+/* ---------- FAQ ---------- */
+.faq-layout { display: grid; gap: 2rem; }
+
+/* ---------- PRIVACY ---------- */
+.legal h2 { font-size: 1.35rem; margin-top: 2.25rem; margin-bottom: .75rem; }
+.legal p, .legal li { color: var(--text-secondary); }
+.legal ul { padding-left: 1.2rem; }
+.legal li + li { margin-top: .4rem; }
